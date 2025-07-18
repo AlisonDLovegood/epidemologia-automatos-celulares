@@ -1,0 +1,22 @@
+Influenza_CA_SEIR(beta, sigma, gamma, N, total_passos)
+   grid = matriz N×N com todos os valores = 0
+   grid[N//2][N//2] ← 2
+   para passo de 1 até total_passos faça
+       new_grid = cópia de grid
+       para cada célula (x, y) em grid faça
+           estado_atual_celula = grid[x][y]
+           se estado_atual_celula = 0 então
+               vizinhos_infectados = Conta_vizinhos_infectados(grid, x, y)
+               probabilidade_infeccao = 1 – (1 – beta)^vizinhos_infectados
+               se Gerar_numero_aleatorio(0, 1) < probabilidade_infeccao então
+                   new_grid[x][y] = 1
+           senão se estado_atual_celula = 1 então
+               se Gerar_numero_aleatorio(0, 1) < sigma então
+                   new_grid[x][y] = 2
+           senão se estado_atual_celula = 2 então
+               se Gerar_numero_aleatorio(0, 1) < gamma então
+                   new_grid[x][y] = 3
+       grid = new_grid
+       Desenha_grid(grid, passo)
+   retorna grid
+
